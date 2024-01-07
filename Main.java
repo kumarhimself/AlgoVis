@@ -1,6 +1,8 @@
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.paint.Color;
 import javafx.scene.Group;
 import javafx.scene.text.Text;
@@ -14,36 +16,11 @@ public class Main extends Application {
 					  // method below.
 	}
 
+	@Override
 	public void start(Stage stage) throws Exception {
-		Group root = new Group();
+		Parent root = FXMLLoader.load(getClass().getResource("start-screen.fxml"));
 
-		// Adding shapes to root node
-		Text text = new Text();
-		text.setText("HELLO THERE!");
-		text.setX(50);
-		text.setY(50);
-		text.setFont(Font.font("Verdana", 50));
-
-		Line line = new Line();
-		line.setStartX(200);
-		line.setStartY(200);
-		line.setEndX(500);
-		line.setEndY(500);
-		line.setStrokeWidth(5);
-		line.setStroke(Color.RED);
-
-		Rectangle rectangle = new Rectangle();
-		rectangle.setX(100);
-		rectangle.setY(100);
-		rectangle.setWidth(100);
-		rectangle.setHeight(100);
-
-		// Setting children of root node
-		root.getChildren().add(text);
-		root.getChildren().add(line);
-		root.getChildren().add(rectangle);
-		
-		Scene scene = new Scene(root, 600, 600, Color.GRAY);
+		Scene scene = new Scene(root);
 
 		stage.setTitle("My First JavaFX");
 		stage.setResizable(false);
