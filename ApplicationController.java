@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.io.IOException; 
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -6,13 +7,14 @@ import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.shape.Rectangle;
 import java.util.ResourceBundle;
 import java.net.URL;
 
@@ -25,7 +27,7 @@ public class ApplicationController implements Initializable {
 	ChoiceBox<String> dsChoiceBox = new ChoiceBox<String>();
 
 	@FXML
-	Slider numElementsScroller = new Slider();
+	TextField numElementsField = new TextField();
 
 	@FXML
 	ChoiceBox<String> algoChoiceBox = new ChoiceBox<String>();
@@ -37,7 +39,7 @@ public class ApplicationController implements Initializable {
 	Button applyBtn = new Button();
 
 	@FXML
-	AnchorPane visualizer = new AnchorPane();
+	Pane visualizer = new Pane();
 
 	String algoUserInput = "";
 
@@ -59,7 +61,7 @@ public class ApplicationController implements Initializable {
 
 	public void generate(ActionEvent event) {	
 		String dataStructure = dsChoiceBox.getValue();
-		double numElements = numElementsScroller.getValue(); 
+		int numElements = Integer.parseInt(numElementsField.getText()); 
 
 		System.out.println("Number of Elements: " + numElements);
 
@@ -79,6 +81,7 @@ public class ApplicationController implements Initializable {
 				// TODO: Create class for generating array of unordered rectangles
 				// Adding relevant algorithms for data structure
 				algoChoiceBox.getItems().addAll("Bubble Sort", "Selection Sort", "Insertion Sort", "Merge Sort", " Quick Sort", "Radix Sort", "Heap Sort");
+				generateRectangles(numElements);
 				break;
 			case "Weighted Graph":
 				// TODO: Create class for generating array of nodes with weighted edges 
@@ -99,5 +102,30 @@ public class ApplicationController implements Initializable {
 			System.out.println("ERROR: Please enter a valid algorithm!");
 			return;
 		}
+	}
+
+	public void generateRectangles(int numElements) {
+		visualizer.getChildren().clear();
+
+		Rectangle[] rects = new Rectangle[numElements];
+		Random rand = new Random();
+
+		int currentXPos = 10;
+		int endXPos = 550;
+		int rectSpacing = 10;
+
+		int rectWidth = 15;
+		int startYPos = 0; // To be determined in for loop below
+
+		for (int i  = 0; i < rects.length; i++) {
+			if (currentXPos < 550) {
+				startYPos = 100 + rand.nextInt(381);
+				rects[i] = new Rectangle(currentXPos, startYPos, rectWidth, 400 - startYPos);
+				currentXPos += rectSpacing + rectWidth;
+				visualizer.getChildren().add(rects[i]);	
+			}
+		}
+		System.out.println(visualizer.getWidth());
+		System.out.println(visualizer.getHeight());
 	}
 }
